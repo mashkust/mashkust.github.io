@@ -5,7 +5,6 @@ export const WISHLIST: Wishlist = {
   id: nanoid(3),
   name: "Заметка",
   list: [],
-  formOpen: false,
 };
 
 export const WISHLISTS: Wishlist[] = [WISHLIST];

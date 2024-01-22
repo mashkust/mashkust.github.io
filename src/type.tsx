@@ -18,9 +18,10 @@ export type Wishlist = {
   name: string;
   list: Wish[];
   // search: string;
-  formOpen: boolean;
+  // formOpen: boolean;
   // textFields: TextFields;
 };
 export type WishlistsData = {
   wishlists: Wishlist[];
+  listOpen: string | null;
 };

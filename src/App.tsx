@@ -6,9 +6,10 @@ import Menu from "./wishlists/menu/menu";
 import { useAppSelector } from "./hooks/hooks";
 import { localKey } from "./const";
 import Wishlists from "./wishlists/wishlists";
+import { createRoot } from "react-dom/client";
 
 function App(): JSX.Element {
-  // const formOpen = useAppSelector((DATA) => DATA.wishlists.formOpen);
+  const listOpen = useAppSelector((DATA) => DATA.listOpen);
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
 
   //сохранение между сеансами
@@ -16,11 +17,17 @@ function App(): JSX.Element {
     localStorage.setItem(localKey, JSON.stringify(wishlists));
   }, [wishlists]);
 
+  useEffect(() => {
+    console.log(listOpen);
+  }, [listOpen]);
+
   return (
     <div className="App">
       <Menu />
-      <Box sx={{ display: "flex" }}>
-        <Wishlists />
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        {!listOpen ? <Wishlists /> : <List />}
       </Box>
     </div>
   );

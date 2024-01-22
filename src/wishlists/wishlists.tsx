@@ -1,11 +1,15 @@
 import { useDispatch } from "react-redux";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Fab } from "@mui/material";
 
 import WishlistsMap from "./wishlists-map/wishlists-map";
 import { addWishlist } from "../store/wishlists-data";
+import { useEffect } from "react";
+import { useAppSelector } from "../hooks/hooks";
+import AddIcon from "@mui/icons-material/Add";
 
 const Wishlists: React.FC = () => {
   const dispatch = useDispatch();
+  const listOpen = useAppSelector((DATA) => DATA.listOpen);
 
   const addWishlistHandler = () => {
     dispatch(addWishlist());
@@ -13,18 +17,16 @@ const Wishlists: React.FC = () => {
   };
 
   return (
-    <Box flexDirection="column" display="flex" margin="80px auto auto auto">
+    <Box flexDirection="column" margin="80px auto auto auto">
       <WishlistsMap />
-      <Button
+      <Fab
+        color="primary"
+        size="medium"
+        aria-label="add"
         onClick={addWishlistHandler}
-        sx={{
-          mt: "40px",
-          width: "130px",
-        }}
-        variant="contained"
       >
-        Добавить
-      </Button>
+        <AddIcon />
+      </Fab>
     </Box>
   );
 };
