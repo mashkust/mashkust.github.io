@@ -5,11 +5,12 @@ import { styled } from "@mui/material/styles";
 import { Typography, Box } from "@mui/material";
 import { Wishlist } from "../../../type";
 import { setListOpen } from "../../../store/wishlists-data";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const WishlistsItem: React.FC<Wishlist> = (el) => {
+const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
   const dispatch = useDispatch();
-  const { name, id } = el;
+  const [isFocus, setIsFocus] = useState(false);
+  // const { name, id } = el;
   const DemoPaper = styled(Paper)(({ theme }) => ({
     width: 120,
     height: 120,
@@ -17,13 +18,25 @@ const WishlistsItem: React.FC<Wishlist> = (el) => {
     ...theme.typography.body2,
     textAlign: "center",
   }));
-  // useEffect(() => {}, [formOpen]);
-  const clickHandler = () => {
+  const handleClick = () => {
     dispatch(setListOpen(id));
   };
   return (
-    <Box maxHeight="450px" overflow="scroll">
-      <DemoPaper variant="outlined" onClick={clickHandler}>
+    <Box
+      margin="20px"
+      onFocus={() => {
+        console.log("jjjjj");
+        setIsFocus(true);
+      }}
+    >
+      <DemoPaper
+        sx={{
+          height: "200px",
+          width: "200px",
+        }}
+        variant={isFocus ? "elevation" : "outlined"}
+        onClick={handleClick}
+      >
         {name}
       </DemoPaper>
     </Box>

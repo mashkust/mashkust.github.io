@@ -4,9 +4,12 @@ export type State = ReturnType<typeof store.getState>;
 
 export type Wish = {
   id: string;
-  text: string;
   name: string;
-  selected: boolean;
+  selected?: boolean;
+  rating?: number;
+  price?: number;
+  link?: string;
+  isNew: boolean;
 };
 
 export type TextFields = {
@@ -24,4 +27,5 @@ export type Wishlist = {
 export type WishlistsData = {
   wishlists: Wishlist[];
   listOpen: string | null;
+  modalOpen: boolean;
 };

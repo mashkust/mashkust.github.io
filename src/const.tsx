@@ -1,9 +1,9 @@
 import { nanoid } from "nanoid";
-import { Wish, TextFields, Wishlist } from "./type";
+import { TextFields, Wishlist } from "./type";
 
 export const WISHLIST: Wishlist = {
   id: nanoid(3),
-  name: "Заметка",
+  name: "Событие",
   list: [],
 };
 

@@ -1,57 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
-import { defaultFields, WISHLISTS } from "../const";
+import { defaultFields, localKey, WISHLISTS } from "../const";
 import { Wish, Wishlist, WishlistsData } from "../type";
 
 //заметки при инициализации
-const localWishlists = () => {
-  const localWishlists = localStorage.getItem("wishlist");
-  const initial =
+const initial = () => {
+  const localWishlists = localStorage.getItem(localKey);
+  const localListOpen = localStorage.getItem("listOpen");
+  const wishlists =
     localWishlists !== null ? JSON.parse(localWishlists) : WISHLISTS;
-
-  return initial;
+  const listOpen = localListOpen !== null ? JSON.parse(localListOpen) : null;
+  const modalOpen = false;
+  return { wishlists, listOpen, modalOpen };
 };
 
-const initialState: WishlistsData = {
-  wishlists: localWishlists(),
-  listOpen: null,
-};
+const initialState: WishlistsData = initial();
 
 export const wishlistsData = createSlice({
   name: "DATA",
   initialState,
   reducers: {
-    //хранить состояние полей ввода
-    // setTextFields: (
-    //   state,
-    //   action: {
-    //     payload: { value: string; name: "description" | "title" | null };
-    //     type: string;
-    //   }
-    // ) => {
-    //   const { name, value } = action.payload;
-    //   if (name) {
-    //     name === "title"
-    //       ? (state.textFields.title = value)
-    //       : (state.textFields.description = value);
-    //   } else {
-    //     state.textFields = defaultFields;
-    //   }
-    // },
+    editList: (state, action) => {
+      const { payload } = action;
+
+      const wishlists = state.wishlists;
+      wishlists.forEach((wishlist) => {
+        if (state.listOpen === wishlist.id) wishlist.list = payload;
+      });
+    },
     setListOpen: (state, action) => {
       console.log(state.listOpen);
       const { payload } = action;
-      const wishlists = state.wishlists;
-      wishlists.forEach((list) => {
-        list.id === payload
-          ? (state.listOpen = payload)
-          : (state.listOpen = null);
-      });
+      state.listOpen = payload;
+      localStorage.setItem("listOpen", JSON.stringify(state.listOpen));
     },
-    //создает заметку
     addWishlist: (state) => {
-      // const { title} = state.textFields;
       const newWishlist: Wishlist = {
         id: nanoid(3),
         list: [],
@@ -59,7 +43,10 @@ export const wishlistsData = createSlice({
       };
       state.wishlists.push(newWishlist);
     },
-    //редактирует заметку
+    setModalOpen: (state, action) => {
+      const { payload } = action;
+      state.modalOpen = payload;
+    },
     editWishlist: (state, action) => {
       // const { payload } = action;
       // const { title, description } = state.textFields;
@@ -79,10 +66,16 @@ export const wishlistsData = createSlice({
     deleteWishlist: (state, action) => {
       const { payload } = action;
       const wishlists = state.wishlists;
-      state.wishlists = wishlists.filter((list) => list.id !== payload);
+      state.wishlists = wishlists.filter((wishlist) => wishlist.id !== payload);
     },
   },
 });
 
-export const { addWishlist, editWishlist, deleteWishlist, setListOpen } =
-  wishlistsData.actions;
+export const {
+  editList,
+  addWishlist,
+  editWishlist,
+  deleteWishlist,
+  setListOpen,
+  setModalOpen,
+} = wishlistsData.actions;

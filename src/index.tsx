@@ -14,15 +14,6 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-// // const StyledRating = styled(Rating)({
-// //   "& .MuiRating-iconFilled": {
-// //     color: "#ab47bc",
-// //   },
-// //   "& .MuiRating-iconHover": {
-// //     color: "#b388ff",
-// //   },
-// // });
-
 const theme = createTheme({
   palette: {
     mode: "dark",

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { nanoid } from "nanoid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,16 +23,11 @@ import {
   GridToolbarExport,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from "@mui/x-data-grid-generator";
-import { Fab, Link, Rating } from "@mui/material";
-import { useEffect } from "react";
-
-const initialRows: GridRowsProp = [];
+import { Fab, Link } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { editList, setListOpen } from "../../store/wishlists-data";
+import { useAppSelector } from "../../hooks/hooks";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -44,8 +40,19 @@ function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: "", isNew: true }]);
+    const id = nanoid(3);
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        name: "",
+        isNew: true,
+        // rating: "",
+        // link: "",
+        // price: null,
+        // selected: false,
+      },
+    ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
@@ -62,29 +69,29 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-function BaseSingleSelectCell({ value, colDef }: GridRenderCellParams) {
-  return (
-    <Rating
-      name="simple-controlled"
-      value={value}
-      // onChange={(event, newValue) => {
-      //   setValue(newValue);
-      // }}
-    />
-  );
-}
-
 function BaseLinkCell({ value, colDef }: GridRenderCellParams) {
-  return <Link href={value}>{value}</Link>;
-}
-export default function List() {
-  const [rows, setRows] = React.useState(initialRows);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
-    {}
+  return (
+    <Link href={value} target="_blank">
+      {value}
+    </Link>
   );
+}
+const List = ({ id }: any) => {
+  const dispatch = useDispatch();
+  const wishlists = useAppSelector((DATA) => DATA.wishlists);
+
+  const initialRows: GridRowsProp =
+    wishlists.find((wishlist) => wishlist.id === id)?.list || [];
+
+  const [rows, setRows] = useState(initialRows);
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const [isSave, setIsSave] = useState(false);
+
   useEffect(() => {
-    console.log(rows);
-  }, [rows]);
+    isSave && dispatch(editList(rows));
+    setIsSave(false);
+  }, [isSave]);
+
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
     event
@@ -104,6 +111,7 @@ export default function List() {
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
+    setIsSave(true);
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -121,6 +129,7 @@ export default function List() {
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setIsSave(true);
     return updatedRow;
   };
 
@@ -128,42 +137,56 @@ export default function List() {
     setRowModesModel(newRowModesModel);
   };
 
+  const handleBackClick = () => {
+    dispatch(setListOpen(null));
+  };
+
   const columns: GridColDef[] = [
     {
-      field: "check",
+      field: "selected",
       headerName: "✓",
       type: "boolean",
-      width: 80,
+      minWidth: 80,
       editable: true,
       filterable: false,
     },
     {
       field: "name",
       headerName: "Название",
-      width: 300,
+      minWidth: 300,
       editable: true,
       sortable: false,
+    },
+    {
+      field: "rating",
+      headerName: "★",
+      type: "singleSelect",
+      minWidth: 50,
+      editable: true,
+      filterable: false,
+      valueOptions: ["1", "2", "3", "4", "5"],
+    },
+    {
+      field: "link",
+      headerName: "Ссылка",
+      minWidth: 250,
+      editable: true,
+      type: "link",
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => <BaseLinkCell {...params} />,
     },
     {
       field: "price",
       headerName: "Цена,руб",
       type: "number",
-      width: 150,
+      minWidth: 150,
       editable: true,
-    },
-    {
-      field: "link",
-      headerName: "Ссылка",
-      width: 250,
-      editable: true,
-      type: "link",
-      sortable: false,
-      renderCell: (params) => <BaseLinkCell {...params} />,
     },
     {
       field: "actions",
       type: "actions",
-      width: 100,
+      minWidth: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -209,12 +232,18 @@ export default function List() {
 
   return (
     <Box width="100%">
-      <Fab size="medium" color="primary" aria-label="back">
+      <Fab
+        size="medium"
+        color="primary"
+        aria-label="back"
+        onClick={handleBackClick}
+        sx={{ margin: "10px" }}
+      >
         <ArrowBackIcon />
       </Fab>
       <Box
         sx={{
-          height: 500,
+          height: 600,
           width: "80%",
           "& .actions": {
             color: "text.secondary",
@@ -222,7 +251,7 @@ export default function List() {
           "& .textPrimary": {
             color: "text.primary",
           },
-          margin: "80px auto auto auto",
+          margin: "30px auto 40px auto",
         }}
       >
         <DataGrid
@@ -256,4 +285,6 @@ export default function List() {
       </Box>
     </Box>
   );
-}
+};
+
+export default List;
