@@ -6,9 +6,10 @@ import { Wishlist } from "../../type";
 import WishlistsItem from "./wishlists-item/wishlists-item";
 import AddIcon from "@mui/icons-material/Add";
 import { addWishlist } from "../../store/wishlists-data";
+import { AppDispatch } from "../../store/store";
 
 const Wishlists: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
   const handleAddWishlist = () => {
     dispatch(addWishlist());
@@ -34,6 +35,7 @@ const Wishlists: React.FC = () => {
         sx={{
           marginTop: "80px",
         }}
+        disabled={wishlists.length > 11}
       >
         <AddIcon />
       </Fab>

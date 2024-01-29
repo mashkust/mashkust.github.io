@@ -5,9 +5,11 @@ import { Modal as ModalStyle } from "@mui/base/Modal";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../hooks/hooks";
 import { setModalOpen } from "../../store/wishlists-data";
+import { AppDispatch } from "../../store/store";
+import { Typography } from "@mui/material";
 
 const Modal: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const modalOpen = useAppSelector((DATA) => DATA.modalOpen);
 
   const handleClose = () => {
@@ -23,19 +25,19 @@ const Modal: React.FC = () => {
         onClose={handleClose}
         slots={{ backdrop: StyledBackdrop }}
       >
-        <ModalContent sx={{ width: 600 }}>
-          <h2 id="unstyled-modal-title" className="modal-title">
-            Уважаемый&nbsp;приятель, это&nbsp;славно, что прочитаешь приглашение
-            еще раз.
-          </h2>
-          <p id="unstyled-modal-description" className="modal-description">
+        <ModalContent sx={{ width: 630 }}>
+          <Typography variant="h5" fontWeight={600}>
+            Уважаемый&nbsp;приятель, это&nbsp;славно, что ты прочитаешь
+            приглашение еще раз.
+          </Typography>
+          <Typography variant="subtitle1" color="white" fontWeight={600}>
             Приглашаю на свой день рождения 9-11&nbsp;февраля,
-            Микрогород&nbsp;в&nbsp;лесу, пижамная вечеринка. <br /> Все будет в
-            лучших традициях 2 курса: курение на&nbsp;балконе, водка, соседи.
-            Формат 2-х&nbsp;дневный. <br /> Мне&nbsp;бы очень хотелось провести
-            утро субботы&nbsp;с приятелями, картошкой фри и утренним бодрящим
-            пивом, перетекающий в&nbsp;вечернюю грустную водку(
-          </p>
+            Микрогород&nbsp;в&nbsp;лесу, пижамная вечеринка. Все будет в лучших
+            традициях 2 курса: курение на&nbsp;балконе, водка, соседи. Формат
+            двухдневный. <br /> Мне&nbsp;бы очень хотелось провести утро
+            субботы&nbsp;с приятелями, картошкой фри и утренним бодрящим пивом,
+            перетекающий в&nbsp;вечернюю грустную водку(
+          </Typography>
         </ModalContent>
       </BaseModal>
     </div>
@@ -89,20 +91,6 @@ const ModalContent = styled("div")(
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.5);
     padding: 24px;
     color: ${theme.palette.success.main};
-
-    & .modal-title {
-      margin: 0;
-      line-height: 2rem;
-      margin-bottom: 8px;
-    }
-
-    & .modal-description {
-      margin: 0;
-      line-height: 1.5rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 4px;
-    }
   `
 );
 

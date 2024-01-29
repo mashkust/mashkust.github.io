@@ -3,15 +3,16 @@ import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAppSelector } from "./hooks/hooks";
+import { AppDispatch } from "./store/store";
 import List from "./components/list/list";
 import Menu from "./components/menu/menu";
-import { useAppSelector } from "./hooks/hooks";
 import Wishlists from "./components/wishlists/wishlists";
 import Modal from "./components/modal/modal";
-import { isFirstEntry, url } from "./const";
+import { url } from "./const";
 import { fetchWishlists } from "./store/wishlists-data";
 import Dialog from "./components/dialog/dialog";
-import { AppDispatch } from "./store/store";
+import Footer from "./components/footer/footer";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +47,7 @@ const App: React.FC = () => {
         {!isLoading && <CircularProgress color="secondary" />}
         {isLoading && (!listOpen ? <Wishlists /> : <List id={listOpen} />)}
       </Box>
+      <Footer />
     </Box>
   );
 };

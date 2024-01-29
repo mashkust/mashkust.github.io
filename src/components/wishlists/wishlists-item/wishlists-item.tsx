@@ -11,9 +11,11 @@ import {
   setListOpen,
 } from "../../../store/wishlists-data";
 import { useState } from "react";
+import { useAppSelector } from "../../../hooks/hooks";
+import { AppDispatch } from "../../../store/store";
 
 const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isFocus, setIsFocus] = useState(false);
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -51,11 +53,7 @@ const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
   };
 
   return (
-    <Box
-      margin="20px"
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
-    >
+    <Box m={1.5} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       <DemoPaper
         sx={{
           height: "200px",

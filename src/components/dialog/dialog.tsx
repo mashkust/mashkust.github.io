@@ -8,9 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useAppSelector } from "../../hooks/hooks";
 import { useDispatch } from "react-redux";
 import { deleteWishlist, setDialogOpen } from "../../store/wishlists-data";
+import { AppDispatch } from "../../store/store";
 
 const Dialog: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const dialogOpen = useAppSelector((DATA) => DATA.dialogOpen);
 
   const handleClose = () => {

@@ -12,9 +12,10 @@ import {
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { setModalOpen } from "../../store/wishlists-data";
+import { AppDispatch } from "../../store/store";
 
 const Menu: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const handleOpen = () => {
     dispatch(setModalOpen(true));
   };

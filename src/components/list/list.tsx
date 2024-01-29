@@ -150,11 +150,13 @@ const List: React.FC<Wishlist> = ({ id }) => {
   const columns: GridColDef[] = [
     {
       field: "selected",
-      headerName: "✓",
+      headerName: "Занято ✓",
       type: "boolean",
-      minWidth: 80,
+      minWidth: 130,
       editable: true,
       filterable: false,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "name",
@@ -188,6 +190,8 @@ const List: React.FC<Wishlist> = ({ id }) => {
       type: "number",
       minWidth: 150,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "actions",
