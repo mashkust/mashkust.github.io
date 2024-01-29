@@ -18,7 +18,12 @@ const Footer: React.FC = () => {
       <Typography variant="overline" lineHeight={0} sx={{ opacity: 0.3 }}>
         Постоянно ведутся технические работы. Изменения видны всем - общий
         доступ. Если все плохо, обращайcя&nbsp;
-        <Link href="https://t.me/mashkust" variant="body2" underline="none">
+        <Link
+          href="https://t.me/mashkust"
+          variant="body2"
+          underline="none"
+          target="_blank"
+        >
           mashkust.
         </Link>
       </Typography>
