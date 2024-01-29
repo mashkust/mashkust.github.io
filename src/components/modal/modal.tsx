@@ -25,8 +25,8 @@ const Modal: React.FC = () => {
       >
         <ModalContent sx={{ width: 600 }}>
           <h2 id="unstyled-modal-title" className="modal-title">
-            Уважаемый&nbsp;приятель, это&nbsp;славно, что ты нажал на это письмо
-            и прочитаешь приглашение еще раз.
+            Уважаемый&nbsp;приятель, это&nbsp;славно, что прочитаешь приглашение
+            еще раз.
           </h2>
           <p id="unstyled-modal-description" className="modal-description">
             Приглашаю на свой день рождения 9-11&nbsp;февраля,

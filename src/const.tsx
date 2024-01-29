@@ -24,6 +24,6 @@ export const theme = createTheme({
 });
 
 export const WISHLISTS: Wishlist[] = [];
-export const localKey = "wishlists";
+export const isFirstEntry = "isFirstEntry";
 export const localPage = "listOpen";
 export const url = "https://wishlists-mashkust.amvera.io/wishlists/0";

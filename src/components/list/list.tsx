@@ -26,13 +26,10 @@ import {
 import { Fab, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  editList,
-  fetchWishlists,
-  setListOpen,
-} from "../../store/wishlists-data";
+import { editList, setListOpen } from "../../store/wishlists-data";
 import { useAppSelector } from "../../hooks/hooks";
 import { Wishlist } from "../../type";
+import { AppDispatch } from "../../store/store";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -79,7 +76,7 @@ function BaseLinkCell({ value, colDef }: GridRenderCellParams) {
 }
 
 const List: React.FC<Wishlist> = ({ id }) => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
   const isLoading = useAppSelector((DATA) => DATA.isLoading);
 

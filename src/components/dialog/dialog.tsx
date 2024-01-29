@@ -8,8 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useAppSelector } from "../../hooks/hooks";
 import { useDispatch } from "react-redux";
 import { deleteWishlist, setDialogOpen } from "../../store/wishlists-data";
-import { Wishlist } from "../../type";
-import { useEffect } from "react";
 
 const Dialog: React.FC = () => {
   const dispatch = useDispatch();

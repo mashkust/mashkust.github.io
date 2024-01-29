@@ -6,13 +6,10 @@ import { Wishlist } from "../../type";
 import WishlistsItem from "./wishlists-item/wishlists-item";
 import AddIcon from "@mui/icons-material/Add";
 import { addWishlist } from "../../store/wishlists-data";
-import Dialog from "../dialog/dialog";
 
 const Wishlists: React.FC = () => {
   const dispatch = useDispatch();
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
-  const dialogOpen = useAppSelector((DATA) => DATA.dialogOpen);
-
   const handleAddWishlist = () => {
     dispatch(addWishlist());
   };

@@ -8,12 +8,13 @@ import Menu from "./components/menu/menu";
 import { useAppSelector } from "./hooks/hooks";
 import Wishlists from "./components/wishlists/wishlists";
 import Modal from "./components/modal/modal";
-import { url } from "./const";
+import { isFirstEntry, url } from "./const";
 import { fetchWishlists } from "./store/wishlists-data";
 import Dialog from "./components/dialog/dialog";
+import { AppDispatch } from "./store/store";
 
 const App: React.FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const listOpen = useAppSelector((DATA) => DATA.listOpen);
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
   const modalOpen = useAppSelector((DATA) => DATA.modalOpen);

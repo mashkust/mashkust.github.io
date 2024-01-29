@@ -10,9 +10,7 @@ import {
   setDialogOpen,
   setListOpen,
 } from "../../../store/wishlists-data";
-import { useEffect, useState } from "react";
-import Dialog from "../../dialog/dialog";
-import { useAppSelector } from "../../../hooks/hooks";
+import { useState } from "react";
 
 const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
   const dispatch = useDispatch();

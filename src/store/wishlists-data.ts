@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
-import { localKey, localPage, WISHLISTS } from "../const";
+import { isFirstEntry, localPage, WISHLISTS } from "../const";
 import { Wishlist, WishlistsData } from "../type";
 import { url } from "../const";
 
@@ -12,12 +12,11 @@ export const fetchWishlists = createAsyncThunk(
 );
 
 const initial = () => {
-  const localWishlists = localStorage.getItem(localKey);
   const localListOpen = localStorage.getItem(localPage);
-  const wishlists =
-    localWishlists !== null ? JSON.parse(localWishlists) : WISHLISTS;
+  const wishlists = WISHLISTS;
   const listOpen = localListOpen !== null ? JSON.parse(localListOpen) : null;
-  return { wishlists, listOpen };
+  const modalOpen = localStorage.getItem(isFirstEntry) === null;
+  return { wishlists, listOpen, modalOpen };
 };
 
 const initialState: WishlistsData = initial();
@@ -59,6 +58,7 @@ export const wishlistsData = createSlice({
     setModalOpen: (state, action) => {
       const { payload } = action;
       state.modalOpen = payload;
+      localStorage.setItem(isFirstEntry, "");
     },
     setDialogOpen: (state, action) => {
       const { payload } = action;
