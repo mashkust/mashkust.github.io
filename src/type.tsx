@@ -17,15 +17,23 @@ export type TextFields = {
 };
 
 export type Wishlist = {
-  id: string;
-  name: string;
-  list: Wish[];
-  // search: string;
-  // formOpen: boolean;
-  // textFields: TextFields;
+  id?: string;
+  name?: string;
+  list?: Wish[];
 };
+
 export type WishlistsData = {
   wishlists: Wishlist[];
   listOpen: string | null;
-  modalOpen: boolean;
+  modalOpen?: boolean;
+  dialogOpen?: string | null;
+  isLoading?: boolean;
 };
+
+export interface ModalProps {
+  text: {
+    title: string;
+    description: string;
+  };
+  style?: string;
+}

@@ -26,8 +26,13 @@ import {
 import { Fab, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editList, setListOpen } from "../../store/wishlists-data";
+import {
+  editList,
+  fetchWishlists,
+  setListOpen,
+} from "../../store/wishlists-data";
 import { useAppSelector } from "../../hooks/hooks";
+import { Wishlist } from "../../type";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -36,7 +41,7 @@ interface EditToolbarProps {
   ) => void;
 }
 
-function EditToolbar(props: EditToolbarProps) {
+const EditToolbar = (props: EditToolbarProps) => {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
@@ -47,10 +52,6 @@ function EditToolbar(props: EditToolbarProps) {
         id,
         name: "",
         isNew: true,
-        // rating: "",
-        // link: "",
-        // price: null,
-        // selected: false,
       },
     ]);
     setRowModesModel((oldModel) => ({
@@ -67,7 +68,7 @@ function EditToolbar(props: EditToolbarProps) {
       <GridToolbarExport />
     </GridToolbarContainer>
   );
-}
+};
 
 function BaseLinkCell({ value, colDef }: GridRenderCellParams) {
   return (
@@ -76,14 +77,18 @@ function BaseLinkCell({ value, colDef }: GridRenderCellParams) {
     </Link>
   );
 }
-const List = ({ id }: any) => {
-  const dispatch = useDispatch();
+
+const List: React.FC<Wishlist> = ({ id }) => {
+  const dispatch = useDispatch<any>();
   const wishlists = useAppSelector((DATA) => DATA.wishlists);
+  const isLoading = useAppSelector((DATA) => DATA.isLoading);
 
-  const initialRows: GridRowsProp =
-    wishlists.find((wishlist) => wishlist.id === id)?.list || [];
+  const getRows = () => {
+    return (wishlists.find((wishlist) => wishlist.id === id)?.list ||
+      []) as GridRowsProp;
+  };
 
-  const [rows, setRows] = useState(initialRows);
+  const [rows, setRows] = useState(getRows());
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [isSave, setIsSave] = useState(false);
 
@@ -91,6 +96,10 @@ const List = ({ id }: any) => {
     isSave && dispatch(editList(rows));
     setIsSave(false);
   }, [isSave]);
+
+  useEffect(() => {
+    setRows(getRows());
+  }, [isLoading]);
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,

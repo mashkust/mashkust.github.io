@@ -1,39 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
+import { localKey, localPage, WISHLISTS } from "../const";
+import { Wishlist, WishlistsData } from "../type";
+import { url } from "../const";
 
-import { defaultFields, localKey, WISHLISTS } from "../const";
-import { Wish, Wishlist, WishlistsData } from "../type";
+export const fetchWishlists = createAsyncThunk(
+  "wishlists/fetchWishlists",
+  async () => {
+    return fetch(url).then((res) => res.json());
+  }
+);
 
-//заметки при инициализации
 const initial = () => {
   const localWishlists = localStorage.getItem(localKey);
-  const localListOpen = localStorage.getItem("listOpen");
+  const localListOpen = localStorage.getItem(localPage);
   const wishlists =
     localWishlists !== null ? JSON.parse(localWishlists) : WISHLISTS;
   const listOpen = localListOpen !== null ? JSON.parse(localListOpen) : null;
-  const modalOpen = false;
-  return { wishlists, listOpen, modalOpen };
+  return { wishlists, listOpen };
 };
 
 const initialState: WishlistsData = initial();
 
 export const wishlistsData = createSlice({
   name: "DATA",
-  initialState,
+  initialState: initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchWishlists.fulfilled, (state, action) => {
+        state.wishlists = action.payload.list;
+        state.isLoading = true;
+      })
+      .addDefaultCase((state, action) => {
+        setTimeout(() => (state.isLoading = false), 10000);
+      });
+  },
   reducers: {
     editList: (state, action) => {
       const { payload } = action;
-
       const wishlists = state.wishlists;
       wishlists.forEach((wishlist) => {
         if (state.listOpen === wishlist.id) wishlist.list = payload;
       });
     },
     setListOpen: (state, action) => {
-      console.log(state.listOpen);
       const { payload } = action;
       state.listOpen = payload;
-      localStorage.setItem("listOpen", JSON.stringify(state.listOpen));
+      localStorage.setItem(localPage, JSON.stringify(state.listOpen));
     },
     addWishlist: (state) => {
       const newWishlist: Wishlist = {
@@ -47,22 +60,17 @@ export const wishlistsData = createSlice({
       const { payload } = action;
       state.modalOpen = payload;
     },
-    editWishlist: (state, action) => {
-      // const { payload } = action;
-      // const { title, description } = state.textFields;
-      // const notes = state.notes;
-      // state.notes = notes.map((el) =>
-      //   el.id === payload
-      //     ? {
-      //         id: payload,
-      //         name: title,
-      //         text: description,
-      //         selected: false,
-      //       }
-      //     : el
-      // );
+    setDialogOpen: (state, action) => {
+      const { payload } = action;
+      state.dialogOpen = payload;
     },
-    //удаляет заметку
+    editWishlist: (state, action) => {
+      const { payload } = action;
+      const wishlists = state.wishlists;
+      wishlists.forEach((wishlist) => {
+        if (wishlist.id === payload.id) wishlist.name = payload.name;
+      });
+    },
     deleteWishlist: (state, action) => {
       const { payload } = action;
       const wishlists = state.wishlists;
@@ -78,4 +86,5 @@ export const {
   deleteWishlist,
   setListOpen,
   setModalOpen,
+  setDialogOpen,
 } = wishlistsData.actions;

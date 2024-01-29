@@ -1,22 +1,22 @@
-import { useMemo } from "react";
-import { Typography, Box, Fab } from "@mui/material";
-
+import * as React from "react";
+import { useDispatch } from "react-redux";
+import { Box, Fab } from "@mui/material";
 import { useAppSelector } from "../../hooks/hooks";
-import { Wish, Wishlist } from "../../type";
+import { Wishlist } from "../../type";
 import WishlistsItem from "./wishlists-item/wishlists-item";
 import AddIcon from "@mui/icons-material/Add";
-import { useDispatch } from "react-redux";
 import { addWishlist } from "../../store/wishlists-data";
+import Dialog from "../dialog/dialog";
 
 const Wishlists: React.FC = () => {
-  const wishlists = useAppSelector((DATA) => DATA.wishlists);
   const dispatch = useDispatch();
-  const listOpen = useAppSelector((DATA) => DATA.listOpen);
+  const wishlists = useAppSelector((DATA) => DATA.wishlists);
+  const dialogOpen = useAppSelector((DATA) => DATA.dialogOpen);
 
   const handleAddWishlist = () => {
     dispatch(addWishlist());
-    // dispatch(setFormOpen(true));
   };
+
   return (
     <Box
       display="flex"

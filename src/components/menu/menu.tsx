@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import {
   AppBar,
   Avatar,
@@ -9,10 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import MailIcon from "@mui/icons-material/Mail";
+import DraftsIcon from "@mui/icons-material/Drafts";
 import { setModalOpen } from "../../store/wishlists-data";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/hooks";
+import { useEffect } from "react";
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,12 +31,12 @@ const Menu: React.FC = () => {
             flexGrow="1"
             display="block"
           >
-            Wishlist by mashonka
+            Предрождение Машонки
             <AutoAwesomeIcon />
           </Typography>
           <Tooltip title="Приглашение" onClick={handleOpen}>
             <IconButton>
-              <MailIcon />
+              <DraftsIcon />
             </IconButton>
           </Tooltip>
           <Avatar
