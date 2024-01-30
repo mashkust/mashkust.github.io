@@ -23,6 +23,7 @@ const Wishlists: React.FC = () => {
       justifyContent="flex-start"
       alignContent="flex-start"
       width="100%"
+      mb={8}
     >
       {wishlists.map((el: Wishlist) => (
         <WishlistsItem {...el} key={el.id} />
@@ -33,7 +34,7 @@ const Wishlists: React.FC = () => {
         aria-label="add"
         onClick={handleAddWishlist}
         sx={{
-          marginTop: "80px",
+          marginTop: "100px",
         }}
         disabled={wishlists.length > 11}
       >

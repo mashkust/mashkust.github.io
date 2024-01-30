@@ -252,6 +252,8 @@ const List: React.FC<Wishlist> = ({ id }) => {
         <ArrowBackIcon />
       </Fab>
       <Box
+        m="0 auto"
+        mb={8}
         sx={{
           height: 600,
           width: "80%",
@@ -261,7 +263,6 @@ const List: React.FC<Wishlist> = ({ id }) => {
           "& .textPrimary": {
             color: "text.primary",
           },
-          margin: "30px auto 40px auto",
         }}
       >
         <DataGrid

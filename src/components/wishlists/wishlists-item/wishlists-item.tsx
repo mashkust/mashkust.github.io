@@ -56,8 +56,8 @@ const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
     <Box m={1.5} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       <DemoPaper
         sx={{
-          height: "200px",
-          width: "200px",
+          height: "240px",
+          width: "240px",
           position: "relative",
           cursor: "pointer",
         }}
@@ -68,7 +68,7 @@ const WishlistsItem: React.FC<Wishlist> = ({ name, id }) => {
           variant="standard"
           sx={{
             position: "absolute",
-            top: 60,
+            top: 85,
             left: 15,
           }}
           onClick={handleStopClick}

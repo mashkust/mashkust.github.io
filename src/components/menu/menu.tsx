@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
             flexGrow="1"
             display="block"
           >
-            Мероприятие Машонки
+            Мероприятие Марии Кустовой
             <AutoAwesomeIcon />
           </Typography>
           <Tooltip title="Приглашение" onClick={handleOpen}>

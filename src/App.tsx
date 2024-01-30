@@ -43,7 +43,7 @@ const App: React.FC = () => {
       {modalOpen && <Modal />}
       {dialogOpen && <Dialog />}
       <Menu />
-      <Box display="flex" margin="50px">
+      <Box display="flex" m={8}>
         {!isLoading && <CircularProgress color="secondary" />}
         {isLoading && (!listOpen ? <Wishlists /> : <List id={listOpen} />)}
       </Box>
