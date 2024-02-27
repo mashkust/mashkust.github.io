@@ -172,7 +172,7 @@ const List: React.FC<Wishlist> = ({ id }) => {
       minWidth: 50,
       editable: true,
       filterable: false,
-      valueOptions: ["1", "2", "3", "4", "5"],
+      valueOptions: ["", "1", "2", "3", "4", "5"],
     },
     {
       field: "link",
@@ -247,7 +247,7 @@ const List: React.FC<Wishlist> = ({ id }) => {
         color="primary"
         aria-label="back"
         onClick={handleBackClick}
-        sx={{ margin: "10px" }}
+        sx={{ marginBottom: "30px" }}
       >
         <ArrowBackIcon />
       </Fab>
@@ -256,7 +256,7 @@ const List: React.FC<Wishlist> = ({ id }) => {
         mb={8}
         sx={{
           height: 600,
-          width: "80%",
+          width: "100%",
           "& .actions": {
             color: "text.secondary",
           },

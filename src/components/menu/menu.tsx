@@ -40,7 +40,7 @@ const Menu: React.FC = () => {
             </IconButton>
           </Tooltip>
           <Avatar
-            alt="Remy Sharp"
+            alt="Avatar"
             src="https://i.ibb.co/gDjg6CY/2024-01-25-10-16-00.png"
           />
         </Toolbar>

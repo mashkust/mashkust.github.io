@@ -36,7 +36,6 @@ const Wishlists: React.FC = () => {
         sx={{
           marginTop: "100px",
         }}
-        disabled={wishlists.length > 11}
       >
         <AddIcon />
       </Fab>
