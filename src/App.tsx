@@ -4,12 +4,12 @@ import { useAppSelector } from "./store/hooks.ts";
 import { setJsonLs } from "./utils/ls.ts";
 import { NOTES_KEY } from "./shared/const.ts";
 import { NotesData } from "./shared/type.ts";
-import Dialog from "./components/dialog/Dialog";
-import Modal from "./components/modal/Modal";
-import Notes from "./components/notes/Notes";
-import Footer from "./components/footer/Footer";
-import List from "./components/list/List";
-import Menu from "./components/menu/Menu";
+import Dialog from "./components/dialog/Dialog.tsx";
+import Modal from "./components/modal/Modal.tsx";
+import Notes from "./components/notes/Notes.tsx";
+import Footer from "./components/footer/Footer.tsx";
+import List from "./components/list/List.tsx";
+import Menu from "./components/menu/Menu.tsx";
 
 const App: FC = () => {
   const listOpen = useAppSelector((DATA) => DATA.listOpen);
