@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import DraftsIcon from "@mui/icons-material/Drafts";
-import { setModalOpen } from "../../store/notes-data";
-import { useAppDispatch } from "../../hooks/hooks";
+import { setModalOpen } from "../../store/notesSlice";
+import { useAppDispatch } from "../../store/hooks";
 import { FC } from "react";
 
 const Menu: FC = () => {
@@ -20,7 +20,7 @@ const Menu: FC = () => {
   return (
     <Box flexGrow="1">
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar data-testid="menu">
           <Typography
             variant="h6"
             noWrap

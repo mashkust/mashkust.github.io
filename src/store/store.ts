@@ -1,28 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { NotesSlice } from "./notesSlice";
 
-import { notesData } from "./notes-data";
+export const setupStore = (preloadedState?: RootState) => {
+  return configureStore({
+    reducer: NotesSlice.reducer,
+    preloadedState,
+  });
+};
 
-// const localStorageMiddleware = ({ getState }) => {
-//   return (next) => (action) => {
-//     const result = next(action);
-//     localStorage.setItem("notes", JSON.stringify(getState()));
-//     return result;
-//   };
-// };
+export type RootState = ReturnType<typeof NotesSlice.reducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore["dispatch"];
 
-// const reHydrateStore = () => {
-//   if (localStorage.getItem("notes") !== null) {
-//     return JSON.parse(String(localStorage.getItem("notes")));
-//   }
-// };
-
-export const store = configureStore({
-  reducer: notesData.reducer,
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(localStorageMiddleware),
-  // preloadedState: reHydrateStore(),
-});
-
-export type AppDispatch = typeof store.dispatch;
-
-export type State = ReturnType<typeof store.getState>;
+export default setupStore;

@@ -2,14 +2,14 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { Box, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Note } from "../../../type";
+import { Note } from "../../../shared/type";
 import {
   editNote,
   setDialogOpen,
   setListOpen,
-} from "../../../store/notes-data";
+} from "../../../store/notesSlice";
 import { FC, useState } from "react";
-import { useAppDispatch } from "../../../hooks/hooks";
+import { useAppDispatch } from "../../../store/hooks";
 
 const NotesItem: FC<Note> = ({ name, id }) => {
   const dispatch = useAppDispatch();
@@ -71,10 +71,12 @@ const NotesItem: FC<Note> = ({ name, id }) => {
           onMouseOut={handleStopMouseOut}
           color="success"
           defaultValue={name}
+          data-testid="notes-item"
         />
         <IconButton
           title="Удалить"
           onClick={handleDelete}
+          data-testid="delete-button"
           sx={{
             top: 0,
             right: 0,

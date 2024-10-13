@@ -5,8 +5,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { deleteNote, setDialogOpen } from "../../store/notes-data";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { deleteNote, setDialogOpen } from "../../store/notesSlice";
 
 const Dialog: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const Dialog: React.FC = () => {
     dispatch(setDialogOpen(null));
   };
   const handleOk = () => {
-    dispatch(deleteNote(dialogOpen));
+    if (dialogOpen) dispatch(deleteNote(dialogOpen));
     dispatch(setDialogOpen(null));
   };
   return (
@@ -26,6 +26,7 @@ const Dialog: React.FC = () => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        data-testid="dialog"
       >
         <DialogTitle id="alert-dialog-title">{"Вы уверены?"}</DialogTitle>
         <DialogContent>

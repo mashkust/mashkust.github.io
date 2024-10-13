@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { styled, css } from "@mui/system";
-import { Modal as ModalStyle } from "@mui/base/Modal";
+import { Modal as ModalStyle } from "@mui/base";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/hooks";
-import { setModalOpen } from "../../store/notes-data";
+import { useAppSelector } from "../../store/hooks";
+import { setModalOpen } from "../../store/notesSlice";
 import { AppDispatch } from "../../store/store";
 import { Link, Typography } from "@mui/material";
 import { forwardRef } from "react";

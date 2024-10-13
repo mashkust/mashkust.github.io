@@ -1,9 +1,9 @@
 import { Box, Fab } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { Note } from "../../type";
-import WishlistsItem from "./notes-item/notes-item";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Note } from "../../shared/type";
+import NotesItem from "./notes-item/NotesItem";
 import AddIcon from "@mui/icons-material/Add";
-import { addNote } from "../../store/notes-data";
+import { addNote } from "../../store/notesSlice";
 import { FC } from "react";
 
 const Notes: FC = () => {
@@ -23,8 +23,8 @@ const Notes: FC = () => {
       width="100%"
       mb={8}
     >
-      {notes.map((el: Note) => (
-        <WishlistsItem {...el} key={el.id} />
+      {notes?.map((el: Note) => (
+        <NotesItem {...el} key={el.id} />
       ))}
       <Fab
         color="primary"
@@ -34,6 +34,7 @@ const Notes: FC = () => {
         sx={{
           marginTop: "100px",
         }}
+        data-testid="add-note"
       >
         <AddIcon />
       </Fab>

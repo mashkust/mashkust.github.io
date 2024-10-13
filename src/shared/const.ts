@@ -1,5 +1,5 @@
 import { Note } from "./type";
-import { createTheme } from "@mui/material/styles";
+import { Theme, createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   palette: {
@@ -21,9 +21,9 @@ export const theme = createTheme({
       paper: "#262026",
     },
   },
-});
+}) as Theme;
 
 export const NOTES: Note[] = [];
-export const isFirstEntry = "isFirstEntry";
-export const localPage = "listOpen";
-export const localNotes = "notes";
+export const MODAL_KEY = "isFirstEntry";
+export const PAGE_KEY = "listOpen";
+export const NOTES_KEY = "notes";

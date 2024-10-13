@@ -1,23 +1,24 @@
-import * as React from "react";
 import { Box } from "@mui/material";
-import { useEffect } from "react";
-import { useAppSelector } from "./hooks/hooks";
-import List from "./components/list/list";
-import Menu from "./components/menu/menu";
-import Modal from "./components/modal/modal";
-import { localNotes } from "./const";
-import Dialog from "./components/dialog/dialog";
-import Footer from "./components/footer/footer";
-import Notes from "./components/notes/notes";
+import { FC, useEffect } from "react";
+import { useAppSelector } from "./store/hooks.ts";
+import { setJsonLs } from "./utils/ls.ts";
+import { NOTES_KEY } from "./shared/const.ts";
+import { NotesData } from "./shared/type.ts";
+import Dialog from "./components/dialog/Dialog";
+import Modal from "./components/modal/Modal";
+import Notes from "./components/notes/Notes";
+import Footer from "./components/footer/Footer";
+import List from "./components/list/List";
+import Menu from "./components/menu/Menu";
 
-const App: React.FC = () => {
+const App: FC = () => {
   const listOpen = useAppSelector((DATA) => DATA.listOpen);
   const notes = useAppSelector((DATA) => DATA.notes);
   const modalOpen = useAppSelector((DATA) => DATA.modalOpen);
   const dialogOpen = useAppSelector((DATA) => DATA.dialogOpen);
 
   useEffect(() => {
-    localStorage.setItem(localNotes, JSON.stringify(notes));
+    setJsonLs<NotesData["notes"]>(NOTES_KEY, notes);
   }, [notes]);
 
   return (

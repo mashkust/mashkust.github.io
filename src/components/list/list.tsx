@@ -20,27 +20,21 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
   GridToolbarExport,
-  GridRenderCellParams,
+  GridToolbarProps,
+  ToolbarPropsOverrides,
 } from "@mui/x-data-grid";
-import { Fab, Link } from "@mui/material";
+import { Fab } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { editList, setListOpen } from "../../store/notes-data";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { Note } from "../../type";
+import { editList, setListOpen } from "../../store/notesSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Note, Todo } from "../../shared/type";
 
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel
-  ) => void;
-}
-
-const EditToolbar = (props: EditToolbarProps) => {
+const EditToolbar = (props: GridToolbarProps & ToolbarPropsOverrides) => {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id = nanoid(3);
-    setRows((oldRows) => [
+    setRows((oldRows: GridRowsProp) => [
       ...oldRows,
       {
         id,
@@ -48,7 +42,7 @@ const EditToolbar = (props: EditToolbarProps) => {
         isNew: true,
       },
     ]);
-    setRowModesModel((oldModel) => ({
+    setRowModesModel((oldModel: GridRowModesModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
@@ -56,7 +50,12 @@ const EditToolbar = (props: EditToolbarProps) => {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+      <Button
+        color="primary"
+        startIcon={<AddIcon />}
+        onClick={handleClick}
+        data-testid="add-todo"
+      >
         Добавить
       </Button>
       <GridToolbarExport />
@@ -79,7 +78,7 @@ const List: FC<Note> = ({ id }) => {
   const [isSave, setIsSave] = useState(false);
 
   useEffect(() => {
-    isSave && dispatch(editList(rows));
+    if (isSave) dispatch(editList(rows as Todo[]));
     setIsSave(false);
   }, [isSave]);
 
@@ -174,7 +173,6 @@ const List: FC<Note> = ({ id }) => {
     {
       field: "actions",
       type: "actions",
-      // minWidth: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -188,6 +186,7 @@ const List: FC<Note> = ({ id }) => {
                 color: "primary.main",
               }}
               onClick={handleSaveClick(id)}
+              data-testid="save-todo"
             />,
             <GridActionsCellItem
               icon={<CancelIcon />}
@@ -195,6 +194,7 @@ const List: FC<Note> = ({ id }) => {
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
+              data-testid="cancel-todo"
             />,
           ];
         }
@@ -212,6 +212,7 @@ const List: FC<Note> = ({ id }) => {
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            data-testid="delete-todo"
           />,
         ];
       },
@@ -250,9 +251,6 @@ const List: FC<Note> = ({ id }) => {
             columnMenuSortDesc: "по убыванию",
             columnMenuManageColumns: "видимость колонок",
             columnMenuHideColumn: "скрыть колонку",
-            columnsPanelShowAllButton: "Показать все",
-            columnsPanelTextFieldLabel: "Поиск",
-            columnsPanelTextFieldPlaceholder: "Введите название колонки...",
             pinToLeft: "Закрепить слева",
             pinToRight: "Закрепить справа",
             unpin: "Открепить",

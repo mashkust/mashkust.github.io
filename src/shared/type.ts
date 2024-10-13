@@ -12,7 +12,7 @@ export type TextFields = {
 };
 
 export type Note = {
-  id?: string;
+  id: string;
   name?: string;
   todoList?: Todo[];
 };
